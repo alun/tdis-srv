@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  </head>
+  <body class="lift:content_id=main">
+    <div id="main" class="lift:surround?with=default;at=content">
+      <div class="column span-18">
+          <h2>Аббревиатуры</h2>
+      </div>
+      <div class="column span-6 last">
+        <input id="quickSearch" type="text"/>
+        <a id="clearSearch" href="javascript:void()">очистить</a>
+        <script type="text/javascript">
+            $("#quickSearch").change(function () {
+                //console.log($(this).val());
+                var searchString = $(this).val();
+                $(".abbrev").each(function () {
+                  var it = $(this);
+                  if (it.text().toLowerCase().indexOf(searchString) != -1 ||
+                      it.attr("abbr").toLowerCase().indexOf(searchString) != -1) {
+                      it.show();
+                  } else {
+                      it.hide();
+                  }
+                });
+            });
+            $("#clearSearch").click(function () {
+                $("#quickSearch").val("").change();
+            });
+        </script>
+      </div>
+
+      <div class="column span-24 last">
+          <p>
+            Наведите на аббревиатуру, чтобы узнать значение
+          </p>
+      </div>
+      <div class="column span-24 last">
+        <div class="lift:Abbrevs.table"/>
+      </div>
+    </div>
+  </body>
+</html>
+
