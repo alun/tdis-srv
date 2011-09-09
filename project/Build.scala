@@ -40,7 +40,7 @@ object MyUtilsBuild extends Build {
   import Dependencies._ 
   import BuildSettings._ 
 
-  lazy val core = Project("core", file ("core"), 
+  lazy val core = Project("abbrevs", file ("abbrevs"),
 		settings = buildSettings ++ WebPlugin.webSettings ++ Seq(
 			libraryDependencies := allDeps,
 			jettyScanDirs := Nil
