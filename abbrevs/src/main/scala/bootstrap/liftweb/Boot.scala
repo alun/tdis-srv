@@ -9,6 +9,12 @@ class Boot {
   def boot {
     LiftRules.addToPackages("com.katlex.dsm")
 
+    Logger.setup = for {
+      logConfig <- Box !! classOf[Boot].getClassLoader.getResource("conf/logconfig.xml")
+    } yield {
+      Logback.withFile(logConfig) _
+    }
+
     def sitemap = SiteMap(
       Menu.i("Аббревиатуры") / "index" // the simple way to declare a menu
     )

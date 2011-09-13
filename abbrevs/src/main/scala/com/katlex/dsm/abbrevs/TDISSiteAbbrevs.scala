@@ -4,8 +4,9 @@ import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.protocol.BasicHttpContext
 import scala.io.Source
+import net.liftweb.common.Logger
 
-object TDISSiteAbbrevs {
+object TDISSiteAbbrevs extends Logger {
   val URI = "http://newasp.omskreg.ru/tdis/short1.htm"
   val client = new DefaultHttpClient
 
@@ -13,6 +14,8 @@ object TDISSiteAbbrevs {
     val context = new BasicHttpContext
     val request = new HttpGet(URI)
     val response = client.execute(request, context).getEntity
+
+    debug("TDIS abbrevs " + URI + " response loaded")
 
     Some {
       Source.fromInputStream(response.getContent, "CP1251").
