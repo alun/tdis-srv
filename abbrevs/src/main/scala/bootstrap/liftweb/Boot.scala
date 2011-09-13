@@ -15,9 +15,10 @@ class Boot {
       Logback.withFile(logConfig) _
     }
 
-    def sitemap = SiteMap(
-      Menu.i("Аббревиатуры") / "index" // the simple way to declare a menu
-    )
+    LiftRules.setSiteMap(SiteMap(
+      Menu.i("Список аббревиатур") / "index", // the simple way to declare a menu
+      Menu.i("Текстовый фильтр") / "filter"
+    ))
 
     // Use jQuery 1.4
     LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQuery14Artifacts
