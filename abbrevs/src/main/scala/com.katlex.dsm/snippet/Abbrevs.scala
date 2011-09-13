@@ -12,12 +12,12 @@ class Abbrevs {
   object filterString extends SessionVar[String]("")
 
   def table = ".abbrevs [id]" #> id & ".abbrevs *" #> {
-    ".abbrev" #> TDISSiteAbbrevs.abbrs.filter { kv =>
+    "abbr" #> TDISSiteAbbrevs.abbrs.filter { kv =>
         kv._1.toLowerCase.indexOf(filterString.get) != -1 ||
         kv._2.toLowerCase.indexOf(filterString.get) != -1
       } .map { kv =>
         "* *" #> kv._1 &
-        "* [abbr]" #> kv._2
+        "* [title]" #> kv._2
       } .toSeq
   }
 
