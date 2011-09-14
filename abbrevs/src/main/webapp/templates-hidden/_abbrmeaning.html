@@ -1,0 +1,18 @@
+<div id="abbrevMeaning">
+  <script type="text/javascript">//<![CDATA[
+   $("#abbrevMeaning").css({
+     position: "absolute"
+   }).hide();
+
+   $("abbr").live("mousemove", function (e) {
+     $("#abbrevMeaning").text($(this).attr("fullText")).css({
+       left: e.pageX + 10 + "px",
+       top: e.pageY + 10 + "px"
+     }).show();
+   });
+   $("abbr").live("mouseout", function () {
+     $("#abbrevMeaning").hide();
+   });
+   $("abbr").live("mouseover", function (e) { e.preventDefault(); });
+ //]]></script>
+</div>

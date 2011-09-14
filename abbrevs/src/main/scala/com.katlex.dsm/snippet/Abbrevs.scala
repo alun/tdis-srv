@@ -17,7 +17,7 @@ class Abbrevs {
         kv._2.toLowerCase.indexOf(filterString.get) != -1
       } .map { kv =>
         "* *" #> kv._1 &
-        "* [title]" #> kv._2
+        "* [fullText]" #> kv._2
       } .toSeq
   }
 
