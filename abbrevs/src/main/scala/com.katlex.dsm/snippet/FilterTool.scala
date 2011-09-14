@@ -24,14 +24,14 @@ object FilterTool extends Logger {
   private object translateResults extends SessionVar[Elem](decorateResults("Результат отобразится здесь"))
 
   private lazy val fixInputReplacements = Array("""\u2018|\u2019""".r -> "'")
-  def abbrsReplacements = {
+  private lazy val abbrsReplacements = {
     def mkAbbr(abbr : String, title : String) = "<abbr fullText=\"%s\">%s</abbr>" format (title, abbr)
     def safeRegexp(s : String) = List("-", "*", "+").foldLeft(s) { (s, specChar) =>
         s.replaceAll("\\" + specChar, "\\\\" + specChar)
       }
     TDISSiteAbbrevs.abbrs.sortBy(- _._1.size).map { case (abbr, title) =>
       val fwdLookup = if (abbr.endsWith("-")) "" else """(?=\.|,|\s|$|\))"""
-      ("""(?<=^|\s|\()%s%s""".format(safeRegexp(abbr), fwdLookup)).r -> mkAbbr(abbr, title)
+      ("""(?<=^|\s|\(|\-|>)%s%s""".format(safeRegexp(abbr), fwdLookup)).r -> mkAbbr(abbr, title)
     }
   }
 
