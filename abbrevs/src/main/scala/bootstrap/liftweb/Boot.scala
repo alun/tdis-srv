@@ -17,7 +17,8 @@ class Boot {
 
     LiftRules.setSiteMap(SiteMap(
       Menu.i("Список аббревиатур") / "index", // the simple way to declare a menu
-      Menu.i("Текстовый фильтр") / "filter"
+      Menu.i("Текстовый фильтр") / "filter",
+      Menu.i("Когнитивный ассистент") / "cgneditor"
     ))
 
     // Use jQuery 1.4
