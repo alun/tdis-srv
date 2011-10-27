@@ -3,14 +3,15 @@ package com.katlex.dsm.snippet
 import net.liftweb._
 import common.Logger
 import http.js.jquery.JqJsCmds.JqSetHtml
-import http.{SessionVar, SHtml}
+import http.{S, StatefulSnippet, SessionVar, SHtml}
 import util.Helpers._
-import SHtml.ElemAttr._
 import com.katlex.dsm.abbrevs.TDISSiteAbbrevs
 import scala.util.matching.Regex
-import xml.{Elem, XML, Text}
+import xml.{NodeSeq, Elem, XML, Text}
 
-object FilterTool extends Logger {
+object FilterTool extends Logger with StatefulSnippet {
+
+  var dispatch: DispatchIt = { case _ => renderInvite _ }
 
   class Replacer(target : String) {
     def ~~(conf : Array[(Regex, String)]) = conf.foldLeft(target) { case (res, (regex, repl)) =>
@@ -35,7 +36,19 @@ object FilterTool extends Logger {
     }
   }
 
-  def render = ".text" #> SHtml.ajaxTextarea(textInput.get, { input =>
+  def renderInvite(ns: NodeSeq) = S.runTemplate("/templates-hidden/_filter_invite" :: Nil).map { templateNs =>
+    val rule = "a" #>
+      SHtml.link("/filter", () => {
+        dispatch = {
+          case _ =>
+            debug("Rendering input form")
+            renderInputForm
+        }
+      }, Text("Далее >>"))
+    rule(templateNs)
+  } .openOr(<div>Template unavailable</div>)
+
+  def renderInputForm = ".text" #> SHtml.ajaxTextarea(textInput.get, { input =>
                         val res = decorateResults(input ~~ fixInputReplacements ~~ abbrsReplacements)
                         textInput.set(input)
                         translateResults.set(res)
